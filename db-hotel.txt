@@ -13,9 +13,15 @@ WHERE YEAR(date_of_birth) > 1988
 ● Seleziona tutti gli ospiti che hanno più di 20 anni(al momento
 dell’esecuzione della query)
 
+Considerando l'anno
 SELECT name, lastname
 FROM ospiti
 WHERE YEAR(NOW()) - YEAR(date_of_birth) > '20'
+
+Considerando la data(anno-mese-giorno)
+SELECT name, lastname 
+FROM `ospiti` 
+WHERE TIMESTAMPDIFF(YEAR, date_of_birth, CURDATE()) > 20
 
 ● Seleziona tutti gli ospiti il cui nome inizia con la D
 
