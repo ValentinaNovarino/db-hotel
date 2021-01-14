@@ -136,9 +136,17 @@ ON o.id = p.ospite_id
 
 ● Stampare Nome, Cognome, Prezzo e Pagante per tutte le prenotazioni fatte a Maggio 2018
 
-
-
-
+SELECT o.name, o.lastname, pagam.price, pag.name, pren.created_at AS data_prenotazione
+FROM ospiti AS o
+JOIN prenotazioni_has_ospiti AS p_h_o
+ON o.id = p_h_o.ospite_id
+JOIN paganti AS pag
+ON pag.ospite_id = o.id
+JOIN pagamenti AS pagam
+ON pagam.pagante_id = pag.id
+JOIN prenotazioni AS pren
+ON p_h_o.prenotazione_id = pren.id
+WHERE MONTH(pren.created_at) = 5
 
 ● Fai la somma di tutti i prezzi delle prenotazioni per le stanze del primo piano
 
@@ -149,7 +157,6 @@ ON stanze.id = prenotazioni.stanza_id
 JOIN pagamenti
 ON pagamenti.prenotazione_id = prenotazioni.id
 WHERE stanze.floor = 1 AND pagamenti.status = 'accepted'
-
 
 ● Prendi i dati di fatturazione per la prenotazione con id=7
 
