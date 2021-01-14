@@ -78,6 +78,8 @@ conta solo chi ha un valore in ospite_id
 SELECT SUM(beds)
 FROM stanze
 
+***********************NUOVI ESERCIZI**********************
+
 Group by
 
 ● Conta gli ospiti raggruppandoli per anno di nascita
@@ -105,7 +107,6 @@ FROM prenotazioni
 GROUP BY  HOUR(created_at)
 ORDER BY prenotazioni_per_orario DESC
 
-
 ● Quante prenotazioni ha fatto l’ospite che ha fatto più prenotazioni?
 
 SELECT COUNT(id) AS n_prenotazioni_stanza, ospite_id
@@ -125,7 +126,6 @@ ON o.id = p.ospite_id
 GROUP BY o.name, o.lastname
 HAVING n_prenotazioni > 2 
 ORDER BY n_prenotazioni DESC 
-
 
 ● Stampare tutti gli ospiti per ogni prenotazione 
 
@@ -170,4 +170,9 @@ ON paganti.id = pagamenti.pagante_id
 ● Le stanze sono state tutte prenotate almeno una volta?
 (Visualizzare le stanze non ancora prenotate)
 
+SELECT stanze.floor, stanze.room_number
+FROM prenotazioni
+RIGHT JOIN stanze
+ON prenotazioni.stanza_id = stanze.id
+WHERE prenotazioni.stanza_id IS NULL;
 
