@@ -100,7 +100,10 @@ GROUP BY stanza_id
 
 ● Fai una analisi per vedere se ci sono ore in cui le prenotazioni sono più frequenti
 
-???????
+SELECT COUNT(created_at) AS prenotazioni_orario , HOUR(created_at) AS orari_preferiti
+FROM prenotazioni
+GROUP BY  HOUR(created_at)
+ORDER BY prenotazioni_per_orario DESC
 
 
 ● Quante prenotazioni ha fatto l’ospite che ha fatto più prenotazioni?
@@ -109,6 +112,7 @@ SELECT COUNT(id) AS n_prenotazioni_stanza, ospite_id
 FROM prenotazioni_has_ospiti
 GROUP BY ospite_id
 ORDER BY n_prenotazioni_stanza DESC
+LIMIT 1
 
 Join
 
@@ -123,7 +127,7 @@ HAVING n_prenotazioni > 2
 ORDER BY n_prenotazioni DESC 
 
 
-● Stampare tutti gli ospiti per ogni prenotazione
+● Stampare tutti gli ospiti per ogni prenotazione 
 
 SELECT o.name, o.lastname, p.prenotazione_id 
 FROM ospiti AS o
@@ -134,8 +138,17 @@ ON o.id = p.ospite_id
 
 
 
+
+
 ● Fai la somma di tutti i prezzi delle prenotazioni per le stanze del primo piano
 
+SELECT SUM(pagamenti.price) AS somma_pagamenti_p_primo
+FROM prenotazioni
+JOIN stanze
+ON stanze.id = prenotazioni.stanza_id
+JOIN pagamenti
+ON pagamenti.prenotazione_id = prenotazioni.id
+WHERE stanze.floor = 1 AND pagamenti.status = 'accepted'
 
 
 ● Prendi i dati di fatturazione per la prenotazione con id=7
