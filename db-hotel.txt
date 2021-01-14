@@ -153,7 +153,12 @@ WHERE stanze.floor = 1 AND pagamenti.status = 'accepted'
 
 ● Prendi i dati di fatturazione per la prenotazione con id=7
 
-
+SELECT paganti.name, paganti.lastname, paganti.created_at, paganti.address
+FROM pagamenti
+JOIN prenotazioni
+ON prenotazioni.id = pagamenti.prenotazione_id
+JOIN paganti
+ON paganti.id = pagamenti.pagante_id 
 
 ● Le stanze sono state tutte prenotate almeno una volta?
 (Visualizzare le stanze non ancora prenotate)
